@@ -1,4 +1,4 @@
-package io.cjybyjk.statuslyricext;
+package io.cjybyjk.statuslyricext.fork;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.preference.Preference;
@@ -21,7 +22,8 @@ import androidx.preference.SwitchPreference;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.cjybyjk.statuslyricext.misc.Constants;
+import io.cjybyjk.statuslyricext.fork.R;
+import io.cjybyjk.statuslyricext.fork.misc.Constants;
 
 public class SettingsActivity extends FragmentActivity {
 
@@ -39,7 +41,8 @@ public class SettingsActivity extends FragmentActivity {
         }
 
         // add urls
-        mUrlMap.put("app", "https://github.com/cjybyjk/StatusBarLyricExt");
+        mUrlMap.put("app", "https://github.com/aimerneige/StatusBarLyricExt-fork");
+        mUrlMap.put("source_app", "https://github.com/cjybyjk/StatusBarLyricExt");
         mUrlMap.put("lyricview", "https://github.com/markzhai/LyricView");
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -51,6 +54,11 @@ public class SettingsActivity extends FragmentActivity {
         }
     }
 
+    /**
+     * [Private] Check if the notification listener is enabled
+     * @param context Context
+     * @return boolean
+     */
     private static boolean isNotificationListenerEnabled(Context context) {
         if (context == null) return false;
         String pkgName = context.getPackageName();
@@ -59,6 +67,7 @@ public class SettingsActivity extends FragmentActivity {
             final String[] names = flat.split(":");
             for (String name : names) {
                 final ComponentName cn = ComponentName.unflattenFromString(name);
+                Log.d("AimerNeige", cn.getPackageName());
                 if (cn != null) {
                     if (TextUtils.equals(pkgName, cn.getPackageName())) {
                         return true;
@@ -69,15 +78,21 @@ public class SettingsActivity extends FragmentActivity {
         return false;
     }
 
+    /**
+     * [Private] Get Current App Version Name
+     * @param context Context
+     * @return String contains current app version name.
+     *         For example: "1.0.2"
+     */
     private static String getAppVersionName(Context context) {
-        String versionName=null;
+        String versionName = null;
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
             versionName = pi.versionName;
         } catch (Exception e) {
             e.printStackTrace();
-            // todo "get versionName Faild"
+            versionName = "undefined";
         }
         return versionName;
     }

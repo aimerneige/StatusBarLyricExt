@@ -1,4 +1,4 @@
-package io.cjybyjk.statuslyricext;
+package io.cjybyjk.statuslyricext.fork;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -30,7 +30,8 @@ import java.util.List;
 
 import cn.zhaiyifan.lyric.LyricUtils;
 import cn.zhaiyifan.lyric.model.Lyric;
-import io.cjybyjk.statuslyricext.misc.Constants;
+import io.cjybyjk.statuslyricext.fork.R;
+import io.cjybyjk.statuslyricext.fork.misc.Constants;
 
 public class MusicListenerService extends NotificationListenerService {
 
